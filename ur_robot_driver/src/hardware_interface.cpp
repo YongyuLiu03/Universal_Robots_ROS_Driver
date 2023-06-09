@@ -309,6 +309,7 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
   }
   else
   {
+    ur_driver_->setKeepaliveCount(10);
     ROS_ERROR_STREAM("The calibration parameters of the connected robot don't match the ones from the given kinematics "
                      "config file. Please be aware that this can lead to critical inaccuracies of tcp positions. Use "
                      "the ur_calibration tool to extract the correct calibration from the robot and pass that into the "
