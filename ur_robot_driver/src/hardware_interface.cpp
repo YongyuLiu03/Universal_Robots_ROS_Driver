@@ -309,7 +309,6 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
   }
   else
   {
-    ur_driver_->setKeepaliveCount(10);
     ROS_ERROR_STREAM("The calibration parameters of the connected robot don't match the ones from the given kinematics "
                      "config file. Please be aware that this can lead to critical inaccuracies of tcp positions. Use "
                      "the ur_calibration tool to extract the correct calibration from the robot and pass that into the "
@@ -319,6 +318,8 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
   }
   ur_driver_->registerTrajectoryDoneCallback(
       std::bind(&HardwareInterface::passthroughTrajectoryDoneCb, this, std::placeholders::_1));
+
+  ur_driver_->setKeepaliveCount(5); 
 
   // Send arbitrary script commands to this topic. Note: On e-Series the robot has to be in
   // remote-control mode.
